@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Watering from '../assets/watering.png';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button } from '../components/Button';
+import Button from '../components/Button';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import { useNavigation } from '@react-navigation/native';
