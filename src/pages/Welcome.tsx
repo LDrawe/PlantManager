@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Dimensions,
 	Image,
@@ -8,18 +8,34 @@ import {
 } from 'react-native';
 import Watering from '../assets/watering.png';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
-import { useNavigation } from '@react-navigation/native';
 
-export function Welcome() {
+export default function Welcome() {
 
 	const navigation = useNavigation<any>();
 
 	function handleStart() {
 		navigation.navigate("UserIdentification");
 	}
+
+	useEffect(() => {
+		async function checkForUser() {
+			try {
+				const user = await AsyncStorage.getItem('@plantmanager:user');
+				if (user) {
+					navigation.navigate('Home');
+				}
+			} catch (error) {
+				await AsyncStorage.multiRemove(['@plantmanager:user','@plantmanager:plants']);
+			}
+		}
+		checkForUser();
+	}, []);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -36,7 +52,7 @@ export function Welcome() {
 					Não esqueça de regar suas plantas. Nós cuidamos de lembrar você sempre que precisar
 				</Text>
 
-				<Button title="Avançar" onPress={handleStart} />
+				<Button title=">" onPress={handleStart} />
 			</View>
 		</SafeAreaView>
 	)

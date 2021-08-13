@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
         color: colors.green_dark,
         fontFamily: fonts.heading
     }
-})
+});

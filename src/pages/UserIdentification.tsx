@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+	Alert,
 	Keyboard,
 	KeyboardAvoidingView,
 	Platform,
@@ -12,10 +13,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
-export function UserIdentification() {
+export default function UserIdentification() {
 
 	const navigation = useNavigation<any>();
 
@@ -30,8 +32,25 @@ export function UserIdentification() {
 		setIsFocused(true);
 	}
 
-	function handleConfirm() {
-		navigation.navigate("Confirmation")
+	async function handleConfirm() {
+		try {
+			
+			if (!name) {
+				return Alert.alert("Nome em branco", "Me diz como chamar você 😥");
+			}
+			await AsyncStorage.setItem("@plantmanager:user", name);
+			
+			navigation.navigate("Confirmation", {
+				title: 'Prontinho',
+				subtitle: 'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
+				buttonTitle: 'Começar',
+				icon: 'smile',
+				nextScreen: 'PlantSelect'
+			});
+			
+		} catch (error) {
+			Alert.alert("Ocorreu um problema", "Não foi possível salvar o seu nome 😥");
+		}
 	}
 
 	return (
@@ -60,7 +79,7 @@ export function UserIdentification() {
 								onChangeText={name => setName(name)}
 							/>
 							<View style={styles.footer}>
-								<Button title="Confirmar" disabled={!name} onPress={handleConfirm} />
+								<Button title="Confirmar" onPress={handleConfirm} />
 							</View>
 						</View>
 					</View>
@@ -116,4 +135,4 @@ const styles = StyleSheet.create({
 		marginTop: 40,
 		paddingHorizontal: 20
 	},
-})
+});

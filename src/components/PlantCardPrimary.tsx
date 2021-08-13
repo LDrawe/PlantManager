@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
         fontFamily: fonts.heading,
         marginVertical: 16
     }
-})
+});
