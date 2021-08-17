@@ -19,7 +19,7 @@ import fonts from '../styles/fonts';
 
 export default function UserIdentification() {
 
-	const navigation = useNavigation<any>();
+	const navigation = useNavigation();
 
 	const [isFocused, setIsFocused] = useState(false);
 	const [name, setName] = useState<string>("");

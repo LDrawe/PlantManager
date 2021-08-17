@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PlantSelect from '../pages/PlantSelect';
 import MyPlants from '../pages/MyPlants';
@@ -11,13 +12,13 @@ const Tabs = createBottomTabNavigator();
 const AuthRoutes = () => {
     return (
         <Tabs.Navigator
-            screenOptions={{
-                headerShown: false,
-                tabBarActiveTintColor: colors.green,
-                tabBarInactiveTintColor: colors.heading,
-                tabBarLabelPosition: 'beside-icon',
-                tabBarStyle: {
-                    height: 65,
+            tabBarOptions={{
+                activeTintColor: colors.green,
+                inactiveTintColor: colors.heading,
+                labelPosition: 'beside-icon',
+                style: {
+                    height: Platform.select({ios: 88, android: 70}),
+                    paddingVertical: Platform.select({ios: 20, android: 0})
                 }
             }}
         >

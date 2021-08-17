@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-const source = axios.CancelToken.source();
-const token = source.token;
+const { token } = axios.CancelToken.source();
 
 const api = axios.create({
-    baseURL: 'http://192.168.100.7:3333',
+    baseURL: 'http://192.168.100.5:3333',
     timeout: 10000,
     cancelToken: token
 });

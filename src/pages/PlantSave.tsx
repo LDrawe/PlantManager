@@ -26,7 +26,7 @@ interface Params {
 
 export default function PlantSave() {
 
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation();
     const route = useRoute();
     const { plant } = route.params as Params;
 
@@ -48,83 +48,86 @@ export default function PlantSave() {
         }
     }
 
-    function handleOpenDateTimePickerforAndroid(){
+    function handleOpenDateTimePickerforAndroid() {
         setShowDatePicker(oldState => !oldState);
     }
 
-    async function handleSave(){
+    async function handleSave() {
         try {
             await savePlant({
                 ...plant,
                 dateTimeNotification: selectedDateTime
             });
             navigation.navigate("Confirmation", {
-				title: 'Tudo certo',
-				subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com muito cuidado.',
-				buttonTitle: 'Muito Obrigado!',
-				icon: 'hug',
-				nextScreen: 'MyPlants'
-			});
+                title: 'Tudo certo',
+                subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com muito cuidado.',
+                buttonTitle: 'Muito Obrigado!',
+                icon: 'hug',
+                nextScreen: 'PlantSelect',
+                nextScreenNest: { screen: 'MyPlants' },
+            });
         } catch (error) {
             return Alert.alert('Ocorreu um problema', 'Não foi possível salvar sua planta! 😢');
         }
     }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.plantInfo}>
-                <SvgFromUri
-                    uri={plant.photo}
-                    height={150}
-                    width={150}
-                />
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <SafeAreaView style={styles.container}>
+                <View style={styles.plantInfo}>
+                    <SvgFromUri
+                        uri={plant.photo}
+                        height={150}
+                        width={150}
+                    />
 
-                <Text style={styles.plantName}>
-                    {plant.name}
-                </Text>
-
-                <Text style={styles.plantAbout}>
-                    {plant.about}
-                </Text>
-
-            </View>
-
-            <View style={styles.controller}>
-                <View style={styles.tipContainer}>
-                    <Image source={WaterDrop} style={styles.tipImage} />
-
-                    <Text style={styles.tipText}>
-                        {plant.water_tips}
+                    <Text style={styles.plantName}>
+                        {plant.name}
                     </Text>
+
+                    <Text style={styles.plantAbout}>
+                        {plant.about}
+                    </Text>
+
                 </View>
-                
-                <Text style={styles.alertLabel}>
-                    Escolha o melhor horário para ser lembrado:
-                </Text>
 
-                {
-                    showDatePicker ?
-                        <DateTimePicker
-                            value={selectedDateTime}
-                            mode="time"
-                            display="spinner"
-                            onChange={handleChangeTime}
-                        /> : null
-                }
+                <View style={styles.controller}>
+                    <View style={styles.tipContainer}>
+                        <Image source={WaterDrop} style={styles.tipImage} />
 
-                {
-                    Platform.OS == 'android' ?
-                        <TouchableOpacity style={styles.dateTimePickerButton} onPress={handleOpenDateTimePickerforAndroid}>
-                            <Text style={styles.dateTimePickerText}>
-                                {`Mudar ${format(selectedDateTime, 'HH:mm')}`}
-                            </Text>
-                        </TouchableOpacity>
-                        : null
-                }
+                        <Text style={styles.tipText}>
+                            {plant.water_tips}
+                        </Text>
+                    </View>
 
-                <Button title="Cadastrar planta" onPress={handleSave} />
-            </View>
-        </SafeAreaView>
+                    <Text style={styles.alertLabel}>
+                        Escolha o melhor horário para ser lembrado:
+                    </Text>
+
+                    {
+                        showDatePicker ?
+                            <DateTimePicker
+                                value={selectedDateTime}
+                                mode="time"
+                                display="spinner"
+                                onChange={handleChangeTime}
+                            /> : null
+                    }
+
+                    {
+                        Platform.OS == 'android' ?
+                            <TouchableOpacity style={styles.dateTimePickerButton} onPress={handleOpenDateTimePickerforAndroid}>
+                                <Text style={styles.dateTimePickerText}>
+                                    {`Mudar ${format(selectedDateTime, 'HH:mm')}`}
+                                </Text>
+                            </TouchableOpacity>
+                            : null
+                    }
+
+                    <Button title="Cadastrar planta" onPress={handleSave} />
+                </View>
+            </SafeAreaView>
+        </ScrollView>
     );
 }
 
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
     plantInfo: {
         flex: 1,
         paddingHorizontal: 30,
-        paddingVertical: 50,
+        paddingVertical: 30,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.shape
@@ -159,7 +162,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         paddingHorizontal: 20,
         paddingTop: 20,
-        paddingBottom: 20
     },
     tipContainer: {
         flexDirection: 'row',
@@ -168,8 +170,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.blue_light,
         padding: 20,
         borderRadius: 20,
-        // position: 'relative',
-        // bottom: 60
     },
     tipImage: {
         width: 56,
@@ -190,10 +190,9 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginTop: 25,
     },
-    dateTimePickerButton:{
+    dateTimePickerButton: {
         alignItems: 'center',
         paddingVertical: 30,
-        marginVertical: 10,
     },
     dateTimePickerText: {
         color: colors.heading,

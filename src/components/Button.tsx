@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
 	button: {
 		backgroundColor: colors.green,
 		justifyContent: "center",
-		alignItems: "center",
 		borderRadius: 16,
 		marginBottom: 10,
 		height: 56,
@@ -35,6 +34,7 @@ const styles = StyleSheet.create({
 	buttonText: {
 		color: colors.white,
 		fontSize: 24,
+		textAlign: 'center',
 		fontFamily: fonts.heading
 	}
 });

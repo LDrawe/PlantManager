@@ -10,7 +10,10 @@ interface Params {
 	subtitle: string,
 	buttonTitle: string,
 	icon: 'smile' | 'hug',
-	nextScreen: string
+	nextScreen: string,
+	nextScreenNest?: {
+		screen: string
+	}
 }
 
 const emojis = {
@@ -20,7 +23,7 @@ const emojis = {
 
 export default function Confirmation() {
 
-	const navigation = useNavigation<any>();
+	const navigation = useNavigation();
 	const routes = useRoute();
 
 	const {
@@ -28,11 +31,12 @@ export default function Confirmation() {
 		subtitle,
 		buttonTitle,
 		icon,
-		nextScreen
+		nextScreen,
+		nextScreenNest
 	} = routes.params as Params;
 
 	function navegar() {
-		navigation.navigate(nextScreen);
+		navigation.navigate(nextScreen, nextScreenNest);
 	}
 
 	return (

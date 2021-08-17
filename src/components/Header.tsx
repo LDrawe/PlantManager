@@ -6,12 +6,21 @@ import fonts from '../styles/fonts';
 
 export default function Header() {
     const [userName, setUserName] = useState<string>("");
+    
     useEffect(() => {
+        
+        let isMounted = true;
+        
         async function getUserName() {
             const name = await AsyncStorage.getItem("@plantmanager:user");
-            setUserName(name || '');
+            if (isMounted)
+                setUserName(name || '');
         }
         getUserName();
+        
+        return () => {
+            isMounted = false;
+        }
     }, [userName]);
 
     return (

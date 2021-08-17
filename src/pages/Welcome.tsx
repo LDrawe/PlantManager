@@ -17,7 +17,7 @@ import fonts from '../styles/fonts';
 
 export default function Welcome() {
 
-	const navigation = useNavigation<any>();
+	const navigation = useNavigation();
 
 	function handleStart() {
 		navigation.navigate("UserIdentification");
