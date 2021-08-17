@@ -36,7 +36,7 @@ Aplicação mobile desenvolvida no NLW #05 para auxílio e controle de regagem d
 ✔️ Autenticação com o seu nome\
 ✔️ Adicionar e remover plantas escolhidas para ser lembrado\
 ✔️ Escolher horário para ser lembrado de regar a planta\
-✔️ Recebimento de notificações para lembrá-lo de regas suas plantas
+✔️ Recebimento de notificações para lembrá-lo de regar suas plantas
 
 ## :rocket: Tecnologias ##
 
