@@ -49,7 +49,7 @@ As seguintes tecnologias foram usadas neste projeto:
 
 ## :clipboard: Requisitos ##
 
-Antes de começar, você precisa ter o Git [Git](https://git-scm.com) e o [Node](https://nodejs.org/en/) instalados.
+Antes de começar, você precisa ter o [Git](https://git-scm.com) e o [Node](https://nodejs.org/en/) instalados.
 
 ## :computer: Instalando ##
 
